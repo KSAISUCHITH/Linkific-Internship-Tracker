@@ -1,4 +1,4 @@
-#Internship Task Tracker
+# Internship Task Tracker
 
 This repository contains all the tasks, assignments, projects, and learning activities completed during my internship.
 
