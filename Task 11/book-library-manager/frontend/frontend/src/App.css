@@ -1,0 +1,78 @@
+.book-illustration {
+  width: 350px;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.book {
+  position: relative;
+  width: 270px;
+  height: 370px;
+  transform: rotate(-7deg);
+}
+
+.book-cover {
+  position: absolute;
+  left: 20px;
+  width: 250px;
+  height: 370px;
+  padding: 45px 35px;
+  background: #292929;
+  color: white;
+  border-radius: 3px 10px 10px 3px;
+  box-shadow: 25px 30px 45px rgba(0, 0, 0, 0.25);
+}
+
+.book-cover p {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 5px;
+}
+
+.book-cover h2 {
+  margin: 8px 0;
+  font-size: 48px;
+  line-height: 0.9;
+  letter-spacing: -2px;
+}
+
+.book-cover span {
+  position: absolute;
+  bottom: 40px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #aaa;
+}
+
+.book-spine {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 30px;
+  height: 350px;
+  background: #444;
+  border-radius: 4px 0 0 4px;
+}
+
+@media (max-width: 1000px) {
+  .book-illustration {
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 800px) {
+  .book-illustration {
+    width: 280px;
+    height: 350px;
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 500px) {
+  .book-illustration {
+    transform: scale(0.7);
+    margin-top: -20px;
+  }
+}
