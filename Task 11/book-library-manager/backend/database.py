@@ -11,12 +11,15 @@ DATABASE_URL = os.getenv(
     "postgresql+psycopg://postgres:postgres@localhost:5433/book_next_2"
 )
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+)
 
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
-    bind=engine
+    bind=engine,
 )
 
 Base = declarative_base()
