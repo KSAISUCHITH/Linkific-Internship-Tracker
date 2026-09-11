@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { ArrowRight, Bookmark, BookOpen, CheckCircle2, Pencil, Quote, Search, Sparkles } from 'lucide-react'
 
 export default function LandingPage({ onEnter }) {
@@ -23,14 +22,13 @@ export default function LandingPage({ onEnter }) {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 md:justify-start">
-            <Link
-              to="/library"
+            <button
               onClick={onEnter}
               className="group inline-flex items-center gap-2.5 rounded-lg bg-[#222] px-7 py-3.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#333] hover:shadow-xl active:translate-y-0 cursor-pointer"
             >
               <span>Explore Library</span>
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-            </Link>
+            </button>
 
             <a
               href="#features"
@@ -175,14 +173,13 @@ export default function LandingPage({ onEnter }) {
             </div>
 
             <div className="shrink-0">
-              <Link
-                to="/library"
+              <button
                 onClick={onEnter}
                 className="inline-flex items-center gap-2.5 rounded-xl bg-[#222] px-8 py-4 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#333] hover:shadow-xl active:translate-y-0 cursor-pointer"
               >
                 <span>Start Your Collection</span>
                 <ArrowRight size={18} />
-              </Link>
+              </button>
             </div>
           </div>
         </div>

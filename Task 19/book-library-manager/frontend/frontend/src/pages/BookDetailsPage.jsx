@@ -4,7 +4,7 @@ import { ArrowLeft, BookOpen, Calendar, CheckCircle2, Heart, Loader2, Pencil, Tr
 import StarRating from '../components/StarRating'
 import BookForm from '../components/BookForm'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_URL = import.meta.env.VITE_API_URL
 
 export default function BookDetailsPage() {
   const { id } = useParams()
@@ -244,17 +244,15 @@ export default function BookDetailsPage() {
             <button
               type="button"
               onClick={handleToggleFavorite}
-              className={`absolute top-5 left-5 z-10 flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold shadow-md transition-all duration-200 cursor-pointer backdrop-blur-md ${
-                book.is_favorite
+              className={`absolute top-5 left-5 z-10 flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold shadow-md transition-all duration-200 cursor-pointer backdrop-blur-md ${book.is_favorite
                   ? 'bg-white text-red-600 ring-1 ring-red-200'
                   : 'bg-white/90 text-[#444] hover:bg-white hover:text-red-500'
-              }`}
+                }`}
             >
               <Heart
                 size={14}
-                className={`transition-colors ${
-                  book.is_favorite ? 'fill-red-500 text-red-500' : 'text-[#666]'
-                }`}
+                className={`transition-colors ${book.is_favorite ? 'fill-red-500 text-red-500' : 'text-[#666]'
+                  }`}
               />
               <span>{book.is_favorite ? 'Favorited' : 'Add to Favorites'}</span>
             </button>

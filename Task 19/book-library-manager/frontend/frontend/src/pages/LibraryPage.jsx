@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { ArrowLeft, Filter, Loader2, Plus, Search, X } from 'lucide-react'
 import BookCard from '../components/BookCard'
 import BookForm from '../components/BookForm'
 import Sidebar from '../components/Sidebar'
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 export default function LibraryPage({ onBack }) {
   const [books, setBooks] = useState([])
@@ -93,56 +92,6 @@ export default function LibraryPage({ onBack }) {
     setEditingBook(null)
   }
 
-  const handleToggleFavorite = async (bookId, newStatus) => {
-    setBooks((prev) =>
-      prev.map((b) => (b.id === bookId ? { ...b, is_favorite: newStatus } : b))
-    )
-
-    try {
-      const endpoint = `${API_URL}/favorites/${bookId}`
-      await fetch(endpoint, {
-        method: newStatus ? 'POST' : 'DELETE'
-      })
-    } catch (error) {
-      console.error('Error toggling favorite:', error)
-    }
-  }
-
-  const handleRate = async (bookId, newRating) => {
-    setBooks((prev) =>
-      prev.map((b) =>
-        b.id === bookId
-          ? { ...b, rating: newRating, user_rating: newRating }
-          : b
-      )
-    )
-
-    try {
-      const res = await fetch(`${API_URL}/books/${bookId}/rating`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ rating: newRating })
-      })
-      if (res.ok) {
-        const data = await res.json()
-        setBooks((prev) =>
-          prev.map((b) =>
-            b.id === bookId
-              ? {
-                ...b,
-                rating: data.average_rating,
-                user_rating: data.rating,
-                rating_count: data.rating_count
-              }
-              : b
-          )
-        )
-      }
-    } catch (error) {
-      console.error('Error submitting rating:', error)
-    }
-  }
-
   const handleDelete = async (id) => {
     const confirmed = window.confirm(
       'Are you sure you want to delete this book?'
@@ -183,8 +132,7 @@ export default function LibraryPage({ onBack }) {
             author: bookData.author,
             genre: bookData.genre,
             year: bookData.year,
-            image: bookData.image,
-            description: bookData.description
+            image: bookData.image
           })
         }
       )
@@ -213,7 +161,7 @@ export default function LibraryPage({ onBack }) {
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-8 sm:px-10 lg:px-12">
-      {onBack ? (
+      {onBack && (
         <button
           type="button"
           onClick={onBack}
@@ -222,14 +170,6 @@ export default function LibraryPage({ onBack }) {
           <ArrowLeft size={14} />
           <span>Back to Home</span>
         </button>
-      ) : (
-        <Link
-          to="/"
-          className="mb-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#777] transition-colors hover:text-[#222] cursor-pointer"
-        >
-          <ArrowLeft size={14} />
-          <span>Back to Home</span>
-        </Link>
       )}
 
       <div className="flex flex-col gap-6 pb-8 md:flex-row md:items-end md:justify-between border-b border-[#ded8cc]">
@@ -328,11 +268,6 @@ export default function LibraryPage({ onBack }) {
                 <BookCard
                   key={book.id}
                   book={book}
-                  isFavorite={book.is_favorite}
-                  rating={book.rating}
-                  userRating={book.user_rating}
-                  onToggleFavorite={handleToggleFavorite}
-                  onRate={handleRate}
                   onEdit={handleEdit}
                   onDelete={handleDelete}
                 />

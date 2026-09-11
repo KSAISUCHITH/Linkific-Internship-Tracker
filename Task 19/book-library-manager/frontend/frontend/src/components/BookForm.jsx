@@ -11,7 +11,6 @@ export default function BookForm({
   const [genre, setGenre] = useState(book?.genre || '')
   const [year, setYear] = useState(book?.year || '')
   const [image, setImage] = useState(book?.image || '')
-  const [description, setDescription] = useState(book?.description || '')
   const [error, setError] = useState('')
 
   const handleImageChange = (e) => {
@@ -45,8 +44,7 @@ export default function BookForm({
       author: author.trim(),
       genre: genre.trim(),
       year: Number(year),
-      image,
-      description: description.trim() || null
+      image
     }
 
     onSave?.(bookPayload)
@@ -185,20 +183,6 @@ export default function BookForm({
                 className="w-full rounded-lg border border-[#ded8cc] bg-white px-3.5 py-2.5 text-sm text-[#222] outline-none transition-all focus:border-[#222] focus:ring-1 focus:ring-[#222]"
               />
             </div>
-          </div>
-
-          <div className="space-y-1.5">
-            <label htmlFor="book-description" className="block text-xs font-semibold text-[#444] uppercase tracking-wider">
-              Description (Optional)
-            </label>
-            <textarea
-              id="book-description"
-              rows={3}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Add a synopsis or personal reading notes..."
-              className="w-full rounded-lg border border-[#ded8cc] bg-white px-3.5 py-2.5 text-sm text-[#222] outline-none transition-all focus:border-[#222] focus:ring-1 focus:ring-[#222] resize-none"
-            />
           </div>
 
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#f0ebe0]">

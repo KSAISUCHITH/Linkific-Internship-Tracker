@@ -20,7 +20,7 @@ def isValid(s):
 
 s = input("Enter brackets: ")
 
-if is_valid(s):
+if isValid(s):
     print("Valid Parentheses")
 else:
     print("Invalid Parentheses")
