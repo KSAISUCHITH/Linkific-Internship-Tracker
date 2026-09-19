@@ -1,6 +1,5 @@
-# Task 18 – Dockerizing the BookNest FastAPI Backend
+# Task 19 – Dockerizing the BookNest FastAPI Backend
 
-**Project:** BookNest – Book Library Management Application
 
 ## Task Objectives
 
