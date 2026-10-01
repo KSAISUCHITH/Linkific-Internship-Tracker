@@ -360,24 +360,3 @@ The Task 28 fixes illustrate three review questions: does a user own the resourc
 
 ---
 
-# 16. Learning Outcomes
-
-- Documentation should distinguish implemented behavior from planned or unverified work.
-- Authorization checks need both role validation and resource ownership rules.
-- Cross-field validation must account for partial updates as well as create requests.
-- Notifications are domain side effects that should be created within the relevant database operation.
-- Docker images need a clear build/runtime boundary, and Vite environment values must be available at build time.
-
----
-
-# 17. Challenges
-
-- No Task 28-specific automated test report or Postman export was available, so testing results could not be represented as passed.
-- The project has Dockerfiles but no repository-level compose, deployment manifest, or production CORS configuration; deployment documentation must remain a plan.
-- Existing image assets predate Task 28, so they are retained only as file-backed screenshot placeholders rather than proof that the Task 28 scenarios were executed.
-
----
-
-# 18. Conclusion
-
-Task 28 adds targeted authorization, validation, and notification behavior to ClearHire and introduces separate backend and frontend Docker build definitions. The project now has a route-level documentation baseline and a release verification plan. Completing the recorded Postman checks, container builds, production environment configuration, and deployment smoke tests remains necessary before a production-release claim can be made.
