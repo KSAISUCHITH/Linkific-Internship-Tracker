@@ -194,25 +194,142 @@ The validation behavior above is based on code inspection. No additional automat
 # 6. API Documentation
 
 
-| Area | Routes | Access expectation |
-|---|---|---|
-| Root | `GET /` | Public health-style message. |
-| Authentication | `POST /auth/register`, `POST /auth/login`, `GET /auth/me` | Register/login are public; current-user lookup requires a token. |
-| Candidates | `POST /candidates`, `GET /candidates`, `GET /candidates/{profile_id}`, `PUT /candidates/{profile_id}`, `DELETE /candidates/{profile_id}` | Candidate self-service and recruiter read access as enforced by the route logic. |
-| Companies | `POST /companies`, `GET /companies`, `GET /companies/{company_id}`, `PUT /companies/{company_id}`, `DELETE /companies/{company_id}` | Authenticated operations with route-level ownership checks. |
-| Jobs | `POST /jobs`, `GET /jobs`, `GET /jobs/my-jobs`, `GET /jobs/{job_id}`, `PUT /jobs/{job_id}`, `DELETE /jobs/{job_id}` | Public catalogue reads; recruiter operations require the recruiter role/ownership where applicable. |
-| Applications | `POST /applications`, `GET /applications/my-applications`, `GET /applications/job/{job_id}`, `GET /applications/{application_id}`, `GET /applications/{application_id}/history`, `PUT /applications/{application_id}`, `DELETE /applications/{application_id}` | Candidate and recruiter access is controlled by the route logic and relevant resource relationship. |
-| Interviews | `POST /interviews`, `GET /interviews/application/{application_id}`, `GET /interviews/{interview_id}`, `PUT /interviews/{interview_id}`, `DELETE /interviews/{interview_id}` | Access is checked against the related application and caller role. |
-| Notifications | `GET /notifications`, `GET /notifications/{notification_id}`, `PUT /notifications/{notification_id}/read` | Authenticated user’s own notifications. |
+# API Reference
 
-### Notable Response Outcomes
+ClearHire exposes REST APIs for authentication, candidates, companies, jobs, applications, interviews, and notifications.
 
-- Successful create endpoints declare HTTP `201 Created`; delete endpoints declare HTTP `204 No Content`.
-- Job validation can return `422 Unprocessable Entity` for an invalid salary range and `400 Bad Request` for a non-future deadline.
-- Candidate authorization and ownership denials use `403 Forbidden`.
-- Additional response fields and validation rules are defined by the Pydantic schemas in `Backend/app/schemas/`.
+### 6.1. Root
 
----
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `GET` | `/` | 🌐 Public | Health-style message |
+
+### 6.2. Authentication
+
+Register and login are public. `/auth/me` requires a token.
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `POST` | `/auth/register` | 🌐 Public | Register a new user |
+| `POST` | `/auth/login` | 🌐 Public | Authenticate the user and return an access token |
+| `GET` | `/auth/me` | 🔒 Protected | Retrieve the currently authenticated user |
+
+### 6.3. Candidates
+
+Candidate self-service, with recruiter read access as enforced by the route logic.
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `POST` | `/candidates` | 🔒 Authorized User | Create a candidate profile |
+| `GET` | `/candidates` | 🔒 Authorized User | List candidate profiles |
+| `GET` | `/candidates/{profile_id}` | 🔒 Authorized User | Retrieve a candidate profile |
+| `PUT` | `/candidates/{profile_id}` | 🔒 Authorized User | Update a candidate profile |
+| `DELETE` | `/candidates/{profile_id}` | 🔒 Authorized User | Delete a candidate profile |
+
+### 6.4. Companies
+
+Authentication is required, and route-level ownership checks apply.
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `POST` | `/companies` | 🔒 Protected | Create a company |
+| `GET` | `/companies` | 🔒 Protected | List companies |
+| `GET` | `/companies/{company_id}` | 🔒 Protected | Retrieve a company |
+| `PUT` | `/companies/{company_id}` | 🔒 Protected | Update a company |
+| `DELETE` | `/companies/{company_id}` | 🔒 Protected | Delete a company |
+
+### 6.5. Jobs
+
+Job catalogue reads are public. Recruiter operations require recruiter access and ownership where applicable.
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `POST` | `/jobs` | 🔒 Recruiter | Create a job |
+| `GET` | `/jobs` | 🌐 Public | List jobs |
+| `GET` | `/jobs/my-jobs` | 🔒 Recruiter | List the recruiter's jobs |
+| `GET` | `/jobs/{job_id}` | 🌐 Public | Retrieve a job |
+| `PUT` | `/jobs/{job_id}` | 🔒 Recruiter / 🔒 Owner | Update a job |
+| `DELETE` | `/jobs/{job_id}` | 🔒 Recruiter / 🔒 Owner | Delete a job |
+
+### 6.6. Applications
+
+Candidate and recruiter access depends on the relevant resource relationship.
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `POST` | `/applications` | 🔒 Authorized User | Submit an application |
+| `GET` | `/applications/my-applications` | 🔒 Authorized User | List the caller's applications |
+| `GET` | `/applications/job/{job_id}` | 🔒 Authorized User | List applications for a job |
+| `GET` | `/applications/{application_id}` | 🔒 Authorized User | Retrieve an application |
+| `GET` | `/applications/{application_id}/history` | 🔒 Authorized User | Retrieve an application's history |
+| `PUT` | `/applications/{application_id}` | 🔒 Authorized User | Update an application |
+| `DELETE` | `/applications/{application_id}` | 🔒 Authorized User | Delete an application |
+
+**Application Flow**
+
+```text
+Candidate
+    ↓
+View Job
+    ↓
+Submit Application
+    ↓
+Application Created
+    ↓
+Status Updates
+    ↓
+Application History
+    ↓
+Interview
+```
+
+### 6.7. Interviews
+
+Access depends on the related application and caller role.
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `POST` | `/interviews` | 🔒 Authorized User | Create an interview |
+| `GET` | `/interviews/application/{application_id}` | 🔒 Authorized User | List interviews for an application |
+| `GET` | `/interviews/{interview_id}` | 🔒 Authorized User | Retrieve an interview |
+| `PUT` | `/interviews/{interview_id}` | 🔒 Authorized User | Update an interview |
+| `DELETE` | `/interviews/{interview_id}` | 🔒 Authorized User | Delete an interview |
+
+### 6.8. Notifications
+
+Users can access their own notifications.
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `GET` | `/notifications` | 🔒 Protected | List the user's notifications |
+| `GET` | `/notifications/{notification_id}` | 🔒 Protected | Retrieve a notification |
+| `PUT` | `/notifications/{notification_id}/read` | 🔒 Protected | Mark a notification as read |
+
+### API Authentication
+
+Protected endpoints require the JWT access token, sent in the `Authorization` header:
+
+```http
+Authorization: Bearer <access_token>
+```
+
+Example:
+
+```http
+GET /auth/me
+Authorization: Bearer <access_token>
+```
+
+### Access Legend
+
+| Symbol | Meaning |
+|---|---|
+| 🌐 | Public endpoint |
+| 🔒 | Authentication required (shown as 🔒 Protected in tables) |
+| 🔒 Candidate | Candidate access |
+| 🔒 Recruiter | Recruiter access |
+| 🔒 Owner | Ownership-based access |
+| 🔒 Authorized User | Access depends on role/resource relationship |
 
 # 7. Postman Testing and Verification
 
