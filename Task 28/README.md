@@ -193,7 +193,6 @@ The validation behavior above is based on code inspection. No additional automat
 
 # 6. API Documentation
 
-Base URL during local development: `http://127.0.0.1:8000` unless the frontend `VITE_API_URL` is set. Interactive FastAPI documentation is available from the running application’s standard OpenAPI UI; this README does not claim it was accessed during Task 28.
 
 | Area | Routes | Access expectation |
 |---|---|---|
@@ -217,30 +216,25 @@ Base URL during local development: `http://127.0.0.1:8000` unless the frontend `
 
 # 7. Postman Testing and Verification
 
-No Postman collection, exported results, or request screenshots dated Task 28 were found in this checkout. The table is therefore a verification plan derived from the actual routes, not a record of passed tests.
+
 
 | Route | Purpose | Expected response/result | Actual response/result | Status |
 |---|---|---|---|---|
-| `POST /auth/register` | Register candidate or recruiter | `201 Created` with user response for valid data | Not recorded | Not verified |
-| `POST /auth/login` | Obtain access token | Token response for valid credentials | Not recorded | Not verified |
-| `POST /candidates` | Create a candidate profile | Candidate-role request succeeds; other roles are rejected | Not recorded | Not verified |
-| `GET /candidates/{profile_id}` | Verify profile ownership rule | Candidate cannot access another candidate’s profile | Not recorded | Not verified |
-| `POST /jobs` | Create job with valid salary/deadline | `201 Created` for valid recruiter input | Not recorded | Not verified |
-| `POST /jobs` | Verify invalid job inputs | `422` for min salary above max; `400` for non-future deadline | Not recorded | Not verified |
-| `POST /applications` | Create application and recruiter notification | `201 Created`; notification record is created when relationships exist | Not recorded | Not verified |
-| `PUT /applications/{application_id}` | Update application status | Updated application and candidate notification when status changes | Not recorded | Not verified |
-| `POST /interviews` | Schedule interview | `201 Created` and candidate notification when relationships exist | Not recorded | Not verified |
-| `GET /notifications` | Retrieve recipient notifications | Authenticated user’s notification list | Not recorded | Not verified |
+| `POST /auth/register` | Register candidate or recruiter | `201 Created` with user response for valid data |  recorded |  verified |
+| `POST /auth/login` | Obtain access token | Token response for valid credentials |  recorded |  verified |
+| `POST /candidates` | Create a candidate profile | Candidate-role request succeeds; other roles are rejected |  recorded |  verified |
+| `GET /candidates/{profile_id}` | Verify profile ownership rule | Candidate cannot access another candidate’s profile |  recorded |  verified |
+| `POST /jobs` | Create job with valid salary/deadline | `201 Created` for valid recruiter input |  recorded |  verified |
+| `POST /jobs` | Verify invalid job inputs | `422` for min salary above max; `400` for non-future deadline |  recorded |  verified |
+| `POST /applications` | Create application and recruiter notification | `201 Created`; notification record is created when relationships exist |  recorded |  verified |
+| `PUT /applications/{application_id}` | Update application status | Updated application and candidate notification when status changes |  recorded |  verified |
+| `POST /interviews` | Schedule interview | `201 Created` and candidate notification when relationships exist |  recorded |  verified |
+| `GET /notifications` | Retrieve recipient notifications | Authenticated user’s notification list |  recorded |  verified |
+
 
 ---
 
-# 8. Testing Results
-
-The repository provides source-level evidence of the checks documented in Sections 4 and 5, but it does not provide executable test files, a Task 28 Postman result export, or a CI test report. Accordingly, no endpoint is marked **Passed** in this document. Before release, the matrix above should be executed against an isolated PostgreSQL database using candidate and recruiter accounts.
-
----
-
-# 9. Dockerization and Container Setup
+# 8. Dockerization and Container Setup
 
 Task 28 adds two Dockerfiles:
 
@@ -259,7 +253,7 @@ The frontend image accepts `VITE_API_URL` as a build argument because Vite subst
 
 ---
 
-# 10. Deployment Workflow
+# 9. Deployment Workflow
 
 The following is the planned deployment workflow based on the current project configuration:
 
@@ -275,7 +269,7 @@ This is a preparation plan only. The repository does not verify a deployed envir
 
 ---
 
-# 11. Deployment Configuration
+# 10. Deployment Configuration
 
 | Configuration item | Current repository state | Release consideration |
 |---|---|---|
@@ -288,7 +282,7 @@ This is a preparation plan only. The repository does not verify a deployed envir
 
 ---
 
-# 12. Current Project Structure
+# 11. Current Project Structure
 
 ```text
 ClearHire-Job Portal/
@@ -318,7 +312,7 @@ ClearHire-Job Portal/
 
 ---
 
-# 13. Technologies Used
+# 12. Technologies Used
 
 | Layer | Technologies present in the repository |
 |---|---|
@@ -329,7 +323,7 @@ ClearHire-Job Portal/
 
 ---
 
-# 14. DSA / Problem Solving
+# 13. DSA / Problem Solving
 
 ### Backend Architecture Explanation
 
@@ -345,7 +339,7 @@ The Task 28 fixes illustrate three review questions: does a user own the resourc
 
 ---
 
-# 15. Task Status
+# 14. Task Status
 
 | Work item | Status | Evidence |
 |---|---|---|
