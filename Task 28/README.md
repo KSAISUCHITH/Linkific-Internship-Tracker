@@ -5,6 +5,7 @@
 
 ### Project
 ClearHire – Job Portal System
+PPT Link: https://docs.google.com/presentation/d/1A89l2uuWpwoWAE04bWXblDsXO4kNZx1X/edit?usp=drive_link&ouid=114091676197355842357&rtpof=true&sd=true
 
 ---
 
