@@ -1,6 +1,7 @@
 # Task 30 — Final Project Presentation & Technical Review
 
 ## Live Demo: https://linkific-internship-tracker-fronten.vercel.app/
+## Presentation: https://docs.google.com/presentation/d/13N8WeL2b7SAR0WUby2llKJqFDO6SIFNE/edit?usp=sharing&ouid=114091676197355842357&rtpof=true&sd=true
 
 ### Date
 06/10/2026
